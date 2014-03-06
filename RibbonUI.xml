@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<customUI onLoad="LoadAction"  xmlns="http://schemas.microsoft.com/office/2006/01/customui" >
+  <ribbon>
+    <tabs>
+      <tab id="RibbonAddinSampleTabCS35" label="插件标签">
+        <group id="group1" label="分组名">
+          <button id="customButton1" size="large" onAction="ButtonAction" getLabel="GetButtonLabel" getImage="GetButtonImage"/>
+        </group>
+      </tab>
+    </tabs>
+  </ribbon>
+</customUI>
