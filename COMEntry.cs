@@ -44,11 +44,10 @@ namespace TestOutlookAddin
             try
             {
                 _outlookApplication = new OutLook.Application(null, app);
-
                 TaskPanes.Add(typeof(TaskPaneContainerControl), "侧边栏标题");
-                TaskPanes[0].DockPosition = MsoCTPDockPosition.msoCTPDockPositionRight;
+                TaskPanes[0].DockPosition = MsoCTPDockPosition.msoCTPDockPositionBottom;
                 TaskPanes[0].DockPositionRestrict = MsoCTPDockPositionRestrict.msoCTPDockPositionRestrictNoChange;
-                TaskPanes[0].Width = 300;
+                TaskPanes[0].Height = 100;
                 TaskPanes[0].Visible = true;
                 TaskPanes[0].Arguments = new object[] { this };
             }
@@ -89,6 +88,7 @@ namespace TestOutlookAddin
             LogonBtn.Style = MsoButtonStyle.msoButtonIconAndCaption;
             LogonBtn.Picture = PictureConverter.IconToPicture(Properties.Resources.SampleIcon2);
             LogonBtn.Mask = PictureConverter.ImageToPicture(Properties.Resources.sampleicon2Mask);
+            LogonBtn.Caption = "按钮";
             //LogonBtn.ClickEvent += new NetOffice.OfficeApi.CommandBarButton_ClickEventHandler(LoginBtn_ClickEvent);
         }
 

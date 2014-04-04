@@ -91,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="COMEntry.cs" />
+    <Compile Include="ComHelper.cs" />
     <Compile Include="PictureConverter.cs">
       <SubType>Component</SubType>
     </Compile>
