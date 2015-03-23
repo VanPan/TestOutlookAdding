@@ -26,6 +26,18 @@ namespace TestOutlookAddin
             OnDisconnection += Addin_OnDisconnection;
         }
 
+        /// <summary>
+        /// Override get custom ui method, only show ribbon at start explorer
+        /// </summary>
+        /// <param name="RibbonID"></param>
+        /// <returns></returns>
+        public override string GetCustomUI(string RibbonID)
+        {
+            if (RibbonID != "Microsoft.Outlook.Explorer") return "";
+            var ui = base.GetCustomUI(RibbonID);
+            return ui;
+        }
+
         private void Addin_OnDisconnection(ext_DisconnectMode RemoveMode, ref Array custom)
         {
             try
@@ -50,11 +62,31 @@ namespace TestOutlookAddin
                 TaskPanes[0].Height = 100;
                 TaskPanes[0].Visible = true;
                 TaskPanes[0].Arguments = new object[] { this };
+                // register add signature after new mail
+                var i = _outlookApplication.Inspectors as OutLook.Inspectors;
+                if (i != null)
+                {
+                    i.NewInspectorEvent += i_NewInspectorEvent;
+                }
             }
             catch (Exception exception)
             {
                 // 处理
             }
+        }
+
+        private OutLook.MailItem _newMail;
+
+        void i_NewInspectorEvent(OutLook._Inspector Inspector)
+        {
+            _newMail = Inspector.CurrentItem as OutLook.MailItem;
+            if (_newMail == null || !String.IsNullOrEmpty(_newMail.EntryID)) return;
+            _newMail.SendEvent += newMail_SendEvent;
+        }
+
+        void newMail_SendEvent(ref bool Cancel)
+        {
+            _newMail.HTMLBody = _newMail.HTMLBody.Replace("</body>", "<p class=MsoNormal><span lang=EN-US><a href=\"http://www.camcard.com\">Click Me</a></span></p></body>");
         }
 
         private void Addin_OnStartupComplete(ref Array custom)
